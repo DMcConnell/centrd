@@ -1,0 +1,96 @@
+.game-board {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.sequential-mode {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.score-display {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.perfect-score {
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.next-button {
+  padding: 10px 24px;
+  font-size: 1rem;
+  background-color: #6B9BD1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.next-button:hover {
+  background-color: #5a89c0;
+}
+
+.multi-grid-mode {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid-container-multi {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-score {
+  font-size: 1rem;
+  color: #333333;
+  font-weight: 500;
+}
+
+.submit-all-button {
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  background-color: #6B9BD1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin: 0 auto;
+  display: block;
+}
+
+.submit-all-button:hover:not(:disabled) {
+  background-color: #5a89c0;
+}
+
+.submit-all-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .grid-container-multi {
+    grid-template-columns: 1fr;
+  }
+}

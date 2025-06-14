@@ -1,0 +1,20 @@
+.app-header {
+  text-align: center;
+  padding: 30px 20px;
+  background-color: #FAF9F6;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.app-header h1 {
+  color: #333333;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  color: #666666;
+  font-size: 1.1rem;
+  margin: 0;
+}

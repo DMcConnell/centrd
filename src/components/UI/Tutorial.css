@@ -1,0 +1,136 @@
+.tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.tutorial-content {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tutorial-content h2 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 30px;
+}
+
+.tutorial-text {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666666;
+  margin-bottom: 30px;
+}
+
+.tutorial-grid {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.tutorial-feedback {
+  text-align: center;
+}
+
+.tutorial-feedback p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.tutorial-feedback .perfect {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.tutorial-button {
+  padding: 10px 24px;
+  font-size: 1rem;
+  background-color: #6B9BD1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tutorial-button:hover {
+  background-color: #5a89c0;
+}
+
+.tutorial-button.primary {
+  font-size: 1.2rem;
+  padding: 12px 32px;
+}
+
+.tutorial-modes {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.mode-preview {
+  flex: 1;
+  padding: 20px;
+  background-color: #F0F7FF;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.mode-preview h3 {
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.mode-preview p {
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.tutorial-tip {
+  text-align: center;
+  color: #666666;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+.skip-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #999999;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+.skip-button:hover {
+  color: #666666;
+}

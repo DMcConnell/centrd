@@ -1,0 +1,108 @@
+.score-display-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.score-display-container h2 {
+  color: #333333;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.score-summary {
+  background-color: #F0F7FF;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  font-size: 1.1rem;
+}
+
+.score-label {
+  color: #666666;
+  font-weight: 500;
+}
+
+.score-value {
+  color: #333333;
+  font-weight: bold;
+}
+
+.puzzle-breakdown {
+  margin-bottom: 30px;
+}
+
+.puzzle-breakdown h3 {
+  color: #333333;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.puzzle-score {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 20px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.puzzle-score:last-child {
+  border-bottom: none;
+}
+
+.puzzle-score .perfect {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.high-scores {
+  margin-bottom: 30px;
+}
+
+.high-scores h3 {
+  color: #333333;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.high-scores ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.high-scores li {
+  padding: 8px 0;
+  color: #666666;
+  font-size: 1.1rem;
+}
+
+.high-scores li.current-score {
+  color: #6B9BD1;
+  font-weight: bold;
+}
+
+.play-again-button {
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  background-color: #6B9BD1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.play-again-button:hover {
+  background-color: #5a89c0;
+}

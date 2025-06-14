@@ -1,0 +1,59 @@
+.cell {
+  position: relative;
+  border: 1px solid #E0E0E0;
+  background-color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell:hover:not(.cell-disabled) {
+  background-color: #F5F5F5;
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cell-user-guess {
+  background-color: rgba(177, 156, 217, 0.3);
+}
+
+.cell-correct-answer {
+  background-color: rgba(255, 215, 0, 0.3);
+}
+
+.cell-highlighted {
+  background-color: rgba(107, 155, 209, 0.2);
+}
+
+.cell-disabled {
+  cursor: default !important;
+}
+
+.cell-marker {
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.user-marker {
+  background-color: rgba(177, 156, 217, 0.7);
+  animation: ripple 1s ease-out;
+}
+
+.correct-marker {
+  background-color: rgba(255, 215, 0, 0.8);
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
