@@ -1,11 +1,21 @@
-FROM node:18-alpine as builder
+FROM node:18-alpine
+
 WORKDIR /app
+
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm ci
+
+# Copy source code
 COPY . .
+
+# Build the app
 RUN npm run build
 
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Expose port 4173 (Vite preview default)
+EXPOSE 4173
+
+# Start the preview server
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0"]
