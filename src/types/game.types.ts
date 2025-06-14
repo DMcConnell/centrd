@@ -39,13 +39,16 @@ export interface HighScores {
   hard: number[];
 }
 
-export const DIFFICULTY_CONFIG: Record<Difficulty, { minGrid: number; maxGrid: number; minDots: number; maxDots: number }> = {
+export const DIFFICULTY_CONFIG: Record<
+  Difficulty,
+  { minGrid: number; maxGrid: number; minDots: number; maxDots: number }
+> = {
   easy: { minGrid: 5, maxGrid: 7, minDots: 3, maxDots: 4 },
   medium: { minGrid: 8, maxGrid: 12, minDots: 5, maxDots: 7 },
-  hard: { minGrid: 13, maxGrid: 20, minDots: 8, maxDots: 12 }
+  hard: { minGrid: 13, maxGrid: 20, minDots: 8, maxDots: 12 },
 };
 
 export const PUZZLE_COUNT = {
   sequential: 5,
-  'multi-grid': 4
+  'multi-grid': 4,
 };

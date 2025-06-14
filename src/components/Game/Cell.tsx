@@ -1,5 +1,5 @@
 import React from 'react';
-import { Position } from '../../types/game.types';
+import type { Position } from '../../types/game.types';
 import './Cell.css';
 
 interface CellProps {
@@ -12,14 +12,14 @@ interface CellProps {
   disabled?: boolean;
 }
 
-export const Cell: React.FC<CellProps> = ({ 
-  position, 
-  size, 
-  onClick, 
-  isUserGuess, 
+export const Cell: React.FC<CellProps> = ({
+  position,
+  size,
+  onClick,
+  isUserGuess,
   isCorrectAnswer,
   isHighlighted,
-  disabled 
+  disabled,
 }) => {
   const handleClick = () => {
     if (!disabled) {
@@ -32,21 +32,23 @@ export const Cell: React.FC<CellProps> = ({
     isUserGuess && 'cell-user-guess',
     isCorrectAnswer && 'cell-correct-answer',
     isHighlighted && 'cell-highlighted',
-    disabled && 'cell-disabled'
-  ].filter(Boolean).join(' ');
+    disabled && 'cell-disabled',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <div 
+    <div
       className={classNames}
       onClick={handleClick}
-      style={{ 
-        width: `${size}px`, 
+      style={{
+        width: `${size}px`,
         height: `${size}px`,
-        cursor: disabled ? 'default' : 'pointer' 
+        cursor: disabled ? 'default' : 'pointer',
       }}
     >
-      {isUserGuess && <div className="cell-marker user-marker" />}
-      {isCorrectAnswer && <div className="cell-marker correct-marker" />}
+      {isUserGuess && <div className='cell-marker user-marker' />}
+      {isCorrectAnswer && <div className='cell-marker correct-marker' />}
     </div>
   );
 };

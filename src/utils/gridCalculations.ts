@@ -1,6 +1,10 @@
-import { Position, DistanceMetric } from '../types/game.types';
+import type { Position, DistanceMetric } from '../types/game.types';
 
-export function calculateDistance(p1: Position, p2: Position, metric: DistanceMetric = 'euclidean'): number {
+export function calculateDistance(
+  p1: Position,
+  p2: Position,
+  metric: DistanceMetric = 'euclidean',
+): number {
   const dx = Math.abs(p1.x - p2.x);
   const dy = Math.abs(p1.y - p2.y);
 
@@ -16,11 +20,22 @@ export function calculateDistance(p1: Position, p2: Position, metric: DistanceMe
   }
 }
 
-export function calculateTotalDistance(point: Position, dots: Position[], metric: DistanceMetric): number {
-  return dots.reduce((total, dot) => total + calculateDistance(point, dot, metric), 0);
+export function calculateTotalDistance(
+  point: Position,
+  dots: Position[],
+  metric: DistanceMetric,
+): number {
+  return dots.reduce(
+    (total, dot) => total + calculateDistance(point, dot, metric),
+    0,
+  );
 }
 
-export function findGeometricMedian(gridSize: number, dots: Position[], metric: DistanceMetric): Position[] {
+export function findGeometricMedian(
+  gridSize: number,
+  dots: Position[],
+  metric: DistanceMetric,
+): Position[] {
   let minDistance = Infinity;
   const optimalPoints: Position[] = [];
 
@@ -44,7 +59,14 @@ export function findGeometricMedian(gridSize: number, dots: Position[], metric: 
   return optimalPoints;
 }
 
-export function isOptimalSolution(guess: Position, dots: Position[], gridSize: number, metric: DistanceMetric): boolean {
+export function isOptimalSolution(
+  guess: Position,
+  dots: Position[],
+  gridSize: number,
+  metric: DistanceMetric,
+): boolean {
   const optimalPoints = findGeometricMedian(gridSize, dots, metric);
-  return optimalPoints.some(point => point.x === guess.x && point.y === guess.y);
+  return optimalPoints.some(
+    (point) => point.x === guess.x && point.y === guess.y,
+  );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameState, Position } from '../../types/game.types';
+import type { GameState, Position } from '../../types/game.types';
 import { Grid } from './Grid';
 import './GameBoard.css';
 
@@ -14,7 +14,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   gameState,
   onCellClick,
   onNextPuzzle,
-  onSubmitAll
+  onSubmitAll,
 }) => {
   const { mode, puzzles, currentPuzzleIndex, isRevealing } = gameState;
 
@@ -23,24 +23,23 @@ export const GameBoard: React.FC<GameBoardProps> = ({
     if (!currentPuzzle) return null;
 
     return (
-      <div className="game-board sequential-mode">
+      <div className='game-board sequential-mode'>
         <Grid
           puzzle={currentPuzzle}
           onCellClick={(position) => onCellClick(currentPuzzle.id, position)}
           disabled={isRevealing}
         />
         {currentPuzzle.score !== undefined && (
-          <div className="score-display">
+          <div className='score-display'>
             {currentPuzzle.score === 0 ? (
-              <span className="perfect-score">Perfect!</span>
+              <span className='perfect-score'>Perfect!</span>
             ) : (
               <span>Distance: {currentPuzzle.score.toFixed(2)}</span>
             )}
-            <button 
-              className="next-button" 
-              onClick={onNextPuzzle}
-            >
-              {currentPuzzleIndex < puzzles.length - 1 ? 'Next Puzzle' : 'View Results'}
+            <button className='next-button' onClick={onNextPuzzle}>
+              {currentPuzzleIndex < puzzles.length - 1
+                ? 'Next Puzzle'
+                : 'View Results'}
             </button>
           </div>
         )}
@@ -49,14 +48,14 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   }
 
   // Multi-grid mode
-  const allGuessed = puzzles.every(p => p.userGuess !== undefined);
+  const allGuessed = puzzles.every((p) => p.userGuess !== undefined);
   const cellSize = puzzles[0]?.gridSize > 10 ? 35 : 40;
 
   return (
-    <div className="game-board multi-grid-mode">
-      <div className="grid-container-multi">
+    <div className='game-board multi-grid-mode'>
+      <div className='grid-container-multi'>
         {puzzles.map((puzzle) => (
-          <div key={puzzle.id} className="grid-wrapper">
+          <div key={puzzle.id} className='grid-wrapper'>
             <Grid
               puzzle={puzzle}
               onCellClick={(position) => onCellClick(puzzle.id, position)}
@@ -64,7 +63,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
               cellSize={cellSize}
             />
             {puzzle.score !== undefined && (
-              <div className="mini-score">
+              <div className='mini-score'>
                 {puzzle.score === 0 ? 'Perfect!' : puzzle.score.toFixed(2)}
               </div>
             )}
@@ -72,12 +71,13 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         ))}
       </div>
       {!isRevealing && (
-        <button 
-          className="submit-all-button" 
+        <button
+          className='submit-all-button'
           onClick={onSubmitAll}
           disabled={!allGuessed}
         >
-          Submit All ({puzzles.filter(p => p.userGuess).length}/{puzzles.length})
+          Submit All ({puzzles.filter((p) => p.userGuess).length}/
+          {puzzles.length})
         </button>
       )}
     </div>

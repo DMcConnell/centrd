@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { HighScores, Difficulty } from '../types/game.types';
+import type { HighScores, Difficulty } from '../types/game.types';
 
 const defaultHighScores: HighScores = {
   easy: [],
   medium: [],
-  hard: []
+  hard: [],
 };
 
 export function useScoring() {
@@ -37,6 +37,6 @@ export function useScoring() {
     highScores,
     getHighScoresForDifficulty,
     getBestScoreForDifficulty,
-    refreshHighScores
+    refreshHighScores,
   };
 }

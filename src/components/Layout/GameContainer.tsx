@@ -6,7 +6,7 @@ import { ModeSelector } from '../UI/ModeSelector';
 import { DifficultySelector } from '../UI/DifficultySelector';
 import { ScoreDisplay } from '../UI/ScoreDisplay';
 import { Tutorial } from '../UI/Tutorial';
-import { GameMode, Difficulty } from '../../types/game.types';
+import type { GameMode, Difficulty } from '../../types/game.types';
 import './GameContainer.css';
 
 export const GameContainer: React.FC = () => {
@@ -16,13 +16,14 @@ export const GameContainer: React.FC = () => {
     makeGuess,
     nextPuzzle,
     submitAllGuesses,
-    closeTutorial
+    closeTutorial,
   } = useGameState();
 
   const { refreshHighScores } = useScoring();
-  
+
   const [selectedMode, setSelectedMode] = useState<GameMode>('sequential');
-  const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('easy');
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<Difficulty>('easy');
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleStartGame = () => {
@@ -41,17 +42,17 @@ export const GameContainer: React.FC = () => {
 
   if (!isPlaying) {
     return (
-      <div className="game-container">
-        <div className="game-setup">
-          <ModeSelector 
-            selectedMode={selectedMode} 
-            onModeSelect={setSelectedMode} 
+      <div className='game-container'>
+        <div className='game-setup'>
+          <ModeSelector
+            selectedMode={selectedMode}
+            onModeSelect={setSelectedMode}
           />
-          <DifficultySelector 
-            selectedDifficulty={selectedDifficulty} 
-            onDifficultySelect={setSelectedDifficulty} 
+          <DifficultySelector
+            selectedDifficulty={selectedDifficulty}
+            onDifficultySelect={setSelectedDifficulty}
           />
-          <button className="start-button" onClick={handleStartGame}>
+          <button className='start-button' onClick={handleStartGame}>
             Start Game
           </button>
         </div>
@@ -61,33 +62,36 @@ export const GameContainer: React.FC = () => {
 
   if (gameState.isComplete && gameState.mode === 'sequential') {
     return (
-      <div className="game-container">
-        <ScoreDisplay 
-          gameState={gameState} 
-          onPlayAgain={handlePlayAgain} 
-        />
+      <div className='game-container'>
+        <ScoreDisplay gameState={gameState} onPlayAgain={handlePlayAgain} />
       </div>
     );
   }
 
-  if (gameState.isComplete && gameState.mode === 'multi-grid' && gameState.isRevealing) {
+  if (
+    gameState.isComplete &&
+    gameState.mode === 'multi-grid' &&
+    gameState.isRevealing
+  ) {
     return (
-      <div className="game-container">
-        <ScoreDisplay 
-          gameState={gameState} 
-          onPlayAgain={handlePlayAgain} 
-        />
+      <div className='game-container'>
+        <ScoreDisplay gameState={gameState} onPlayAgain={handlePlayAgain} />
       </div>
     );
   }
 
   return (
-    <div className="game-container">
-      <div className="game-info">
-        <span>Mode: {gameState.mode === 'sequential' ? 'Sequential' : 'Multi-Grid'}</span>
+    <div className='game-container'>
+      <div className='game-info'>
+        <span>
+          Mode: {gameState.mode === 'sequential' ? 'Sequential' : 'Multi-Grid'}
+        </span>
         <span>Difficulty: {gameState.difficulty}</span>
         {gameState.mode === 'sequential' && (
-          <span>Puzzle: {gameState.currentPuzzleIndex + 1} / {gameState.puzzles.length}</span>
+          <span>
+            Puzzle: {gameState.currentPuzzleIndex + 1} /{' '}
+            {gameState.puzzles.length}
+          </span>
         )}
       </div>
       <GameBoard
