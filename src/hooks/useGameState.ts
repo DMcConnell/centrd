@@ -63,32 +63,47 @@ export function useGameState() {
       if (puzzleIndex === -1) return prev;
 
       const puzzle = prev.puzzles[puzzleIndex];
-      const optimalPoints = findGeometricMedian(
-        puzzle.gridSize,
-        puzzle.dots,
-        prev.distanceMetric,
-      );
-      const correctAnswer = optimalPoints[0]; // Take first optimal point
-      const score = calculateDistance(
-        guess,
-        correctAnswer,
-        prev.distanceMetric,
-      );
-
       const updatedPuzzles = [...prev.puzzles];
-      updatedPuzzles[puzzleIndex] = {
-        ...puzzle,
-        userGuess: guess,
-        correctAnswer,
-        score,
-      };
 
-      return {
-        ...prev,
-        puzzles: updatedPuzzles,
-        totalScore: prev.totalScore + score,
-        isRevealing: true,
-      };
+      if (prev.mode === 'sequential') {
+        // Sequential mode: immediately calculate and reveal answer
+        const optimalPoints = findGeometricMedian(
+          puzzle.gridSize,
+          puzzle.dots,
+          prev.distanceMetric,
+        );
+        const correctAnswer = optimalPoints[0]; // Take first optimal point
+        const score = calculateDistance(
+          guess,
+          correctAnswer,
+          prev.distanceMetric,
+        );
+
+        updatedPuzzles[puzzleIndex] = {
+          ...puzzle,
+          userGuess: guess,
+          correctAnswer,
+          score,
+        };
+
+        return {
+          ...prev,
+          puzzles: updatedPuzzles,
+          totalScore: prev.totalScore + score,
+          isRevealing: true,
+        };
+      } else {
+        // Multi-grid mode: just store the guess, don't reveal answer yet
+        updatedPuzzles[puzzleIndex] = {
+          ...puzzle,
+          userGuess: guess,
+        };
+
+        return {
+          ...prev,
+          puzzles: updatedPuzzles,
+        };
+      }
     });
   }, []);
 
@@ -145,12 +160,24 @@ export function useGameState() {
         };
       });
 
-      // Save high score
+      return {
+        ...prev,
+        puzzles: updatedPuzzles,
+        totalScore,
+        isRevealing: true,
+        // Don't set isComplete yet - let user review first
+      };
+    });
+  }, []);
+
+  const viewFinalScore = useCallback(() => {
+    setGameState((prev) => {
+      // Save high score when transitioning to final score
       const highScores = JSON.parse(
         localStorage.getItem('highScores') ||
           '{"easy":[],"medium":[],"hard":[]}',
       );
-      const avgScore = totalScore / prev.puzzles.length;
+      const avgScore = prev.totalScore / prev.puzzles.length;
       highScores[prev.difficulty].push(avgScore);
       highScores[prev.difficulty].sort((a: number, b: number) => a - b);
       highScores[prev.difficulty] = highScores[prev.difficulty].slice(0, 10);
@@ -158,10 +185,7 @@ export function useGameState() {
 
       return {
         ...prev,
-        puzzles: updatedPuzzles,
-        totalScore,
         isComplete: true,
-        isRevealing: true,
       };
     });
   }, []);
@@ -181,6 +205,7 @@ export function useGameState() {
     makeGuess,
     nextPuzzle,
     submitAllGuesses,
+    viewFinalScore,
     setDistanceMetric,
     closeTutorial,
   };

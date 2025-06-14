@@ -16,6 +16,7 @@ export const GameContainer: React.FC = () => {
     makeGuess,
     nextPuzzle,
     submitAllGuesses,
+    viewFinalScore,
     closeTutorial,
   } = useGameState();
 
@@ -99,6 +100,7 @@ export const GameContainer: React.FC = () => {
         onCellClick={makeGuess}
         onNextPuzzle={nextPuzzle}
         onSubmitAll={submitAllGuesses}
+        onViewFinalScore={viewFinalScore}
       />
     </div>
   );

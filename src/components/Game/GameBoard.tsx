@@ -8,6 +8,7 @@ interface GameBoardProps {
   onCellClick: (puzzleId: string, position: Position) => void;
   onNextPuzzle: () => void;
   onSubmitAll: () => void;
+  onViewFinalScore: () => void;
 }
 
 export const GameBoard: React.FC<GameBoardProps> = ({
@@ -15,6 +16,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   onCellClick,
   onNextPuzzle,
   onSubmitAll,
+  onViewFinalScore,
 }) => {
   const { mode, puzzles, currentPuzzleIndex, isRevealing } = gameState;
 
@@ -78,6 +80,11 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         >
           Submit All ({puzzles.filter((p) => p.userGuess).length}/
           {puzzles.length})
+        </button>
+      )}
+      {isRevealing && !gameState.isComplete && (
+        <button className='view-final-score-button' onClick={onViewFinalScore}>
+          View Final Score
         </button>
       )}
     </div>
