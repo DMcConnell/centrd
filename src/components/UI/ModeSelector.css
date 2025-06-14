@@ -1,0 +1,56 @@
+.mode-selector {
+  margin-bottom: 30px;
+}
+
+.mode-selector h3 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.mode-options {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.mode-option {
+  padding: 20px;
+  width: 200px;
+  background-color: white;
+  border: 2px solid #E0E0E0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.mode-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mode-option.selected {
+  border-color: #6B9BD1;
+  background-color: #F0F7FF;
+}
+
+.mode-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.mode-description {
+  font-size: 0.9rem;
+  color: #666666;
+  margin-bottom: 8px;
+}
+
+.mode-count {
+  font-size: 0.85rem;
+  color: #999999;
+  font-style: italic;
+}

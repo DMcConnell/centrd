@@ -1,0 +1,50 @@
+.difficulty-selector {
+  margin-bottom: 30px;
+}
+
+.difficulty-selector h3 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.difficulty-options {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.difficulty-option {
+  padding: 16px 24px;
+  background-color: white;
+  border: 2px solid #E0E0E0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 180px;
+}
+
+.difficulty-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-option.selected {
+  border-color: #6B9BD1;
+  background-color: #F0F7FF;
+}
+
+.difficulty-label {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 6px;
+}
+
+.difficulty-description {
+  font-size: 0.85rem;
+  color: #666666;
+}
