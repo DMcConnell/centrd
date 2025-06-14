@@ -25,6 +25,7 @@ export const Grid: React.FC<GridProps> = ({
       const position = { x, y };
       const isUserGuess = userGuess?.x === x && userGuess?.y === y;
       const isCorrectAnswer = correctAnswer?.x === x && correctAnswer?.y === y;
+      const hasDot = dots.some((dot) => dot.x === x && dot.y === y);
 
       cells.push(
         <Cell
@@ -34,7 +35,8 @@ export const Grid: React.FC<GridProps> = ({
           onClick={onCellClick}
           isUserGuess={isUserGuess}
           isCorrectAnswer={isCorrectAnswer}
-          disabled={disabled || !!userGuess}
+          disabled={disabled || !!userGuess || hasDot}
+          hasDot={hasDot}
         />,
       );
     }

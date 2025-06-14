@@ -10,6 +10,7 @@ interface CellProps {
   isCorrectAnswer?: boolean;
   isHighlighted?: boolean;
   disabled?: boolean;
+  hasDot?: boolean;
 }
 
 export const Cell: React.FC<CellProps> = ({
@@ -20,6 +21,7 @@ export const Cell: React.FC<CellProps> = ({
   isCorrectAnswer,
   isHighlighted,
   disabled,
+  hasDot,
 }) => {
   const handleClick = () => {
     if (!disabled) {
@@ -33,6 +35,7 @@ export const Cell: React.FC<CellProps> = ({
     isCorrectAnswer && 'cell-correct-answer',
     isHighlighted && 'cell-highlighted',
     disabled && 'cell-disabled',
+    hasDot && 'cell-has-dot',
   ]
     .filter(Boolean)
     .join(' ');

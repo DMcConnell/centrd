@@ -43,6 +43,13 @@ export function findGeometricMedian(
   for (let x = 0; x < gridSize; x++) {
     for (let y = 0; y < gridSize; y++) {
       const point = { x, y };
+
+      // Skip positions that contain dots - they can't be selected
+      const hasDot = dots.some((dot) => dot.x === x && dot.y === y);
+      if (hasDot) {
+        continue;
+      }
+
       const totalDistance = calculateTotalDistance(point, dots, metric);
 
       if (totalDistance < minDistance) {
