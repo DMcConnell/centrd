@@ -71,11 +71,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
               simple example!
             </p>
             <div className='tutorial-grid'>
-              <Grid
-                puzzle={currentPuzzle}
-                onCellClick={handleCellClick}
-                cellSize={60}
-              />
+              <Grid puzzle={currentPuzzle} onCellClick={handleCellClick} />
             </div>
             {currentPuzzle.userGuess && (
               <div className='tutorial-feedback'>
@@ -99,11 +95,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
               pattern!
             </p>
             <div className='tutorial-grid'>
-              <Grid
-                puzzle={currentPuzzle}
-                onCellClick={handleCellClick}
-                cellSize={60}
-              />
+              <Grid puzzle={currentPuzzle} onCellClick={handleCellClick} />
             </div>
             {currentPuzzle.userGuess && (
               <div className='tutorial-feedback'>

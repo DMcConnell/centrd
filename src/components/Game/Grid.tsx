@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Position, Puzzle } from '../../types/game.types';
 import { Cell } from './Cell';
 import { Dot } from './Dot';
@@ -11,13 +11,103 @@ interface GridProps {
   cellSize?: number;
 }
 
+const useViewportSize = () => {
+  const [viewportSize, setViewportSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+  });
+
+  useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const handleResize = () => {
+      // Debounce resize events to prevent excessive re-renders
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setViewportSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  return viewportSize;
+};
+
+const calculateOptimalCellSize = (
+  gridSize: number,
+  viewportWidth: number,
+  viewportHeight: number,
+  maxCellSize: number = 60,
+  minCellSize: number = 20,
+): number => {
+  // Determine if we're on mobile
+  const isMobile = viewportWidth <= 768;
+  const isSmallMobile = viewportWidth <= 480;
+
+  // Account for padding, margins, and other UI elements based on screen size
+  let reservedWidth: number;
+  let reservedHeight: number;
+
+  if (isSmallMobile) {
+    reservedWidth = 32; // 16px on each side
+    reservedHeight = 280; // More space needed for mobile UI
+  } else if (isMobile) {
+    reservedWidth = 40; // 20px on each side
+    reservedHeight = 250; // Mobile UI takes more vertical space
+  } else {
+    reservedWidth = 80; // 40px on each side
+    reservedHeight = 200; // Desktop UI is more compact
+  }
+
+  const availableWidth = viewportWidth - reservedWidth;
+  const availableHeight = viewportHeight - reservedHeight;
+
+  // Calculate the maximum cell size that fits in both dimensions
+  const maxCellByWidth = Math.floor(availableWidth / gridSize);
+  const maxCellByHeight = Math.floor(availableHeight / gridSize);
+
+  // Use the smaller of the two to ensure it fits in both dimensions
+  const calculatedSize = Math.min(maxCellByWidth, maxCellByHeight);
+
+  // Adjust max/min cell sizes based on screen size
+  const adjustedMaxSize = isMobile ? Math.min(maxCellSize, 45) : maxCellSize;
+  const adjustedMinSize = isSmallMobile
+    ? Math.max(minCellSize, 15)
+    : minCellSize;
+
+  // Add a small safety margin to ensure the grid fits comfortably
+  const safetyMargin = 0.95; // Use 95% of calculated size for safety
+  const safeSize = Math.floor(calculatedSize * safetyMargin);
+
+  // Clamp between min and max sizes
+  return Math.max(adjustedMinSize, Math.min(adjustedMaxSize, safeSize));
+};
+
 export const Grid: React.FC<GridProps> = ({
   puzzle,
   onCellClick,
   disabled = false,
-  cellSize = 50,
+  cellSize: propCellSize,
 }) => {
   const { gridSize, dots, userGuess, correctAnswer } = puzzle;
+  const viewportSize = useViewportSize();
+
+  // Calculate dynamic cell size, but allow override via props
+  const calculatedCellSize = calculateOptimalCellSize(
+    gridSize,
+    viewportSize.width,
+    viewportSize.height,
+  );
+
+  const cellSize = propCellSize || calculatedCellSize;
 
   const cells: React.ReactElement[] = [];
   for (let y = 0; y < gridSize; y++) {

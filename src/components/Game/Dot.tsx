@@ -13,9 +13,14 @@ export const Dot: React.FC<DotProps> = ({
   cellSize,
   color = '#6B9BD1',
 }) => {
+  // Scale dot size based on cell size - typically 30-40% of cell size
+  const dotSize = Math.max(8, Math.min(20, cellSize * 0.35));
+
   const style = {
     left: `${position.x * cellSize + cellSize / 2}px`,
     top: `${position.y * cellSize + cellSize / 2}px`,
+    width: `${dotSize}px`,
+    height: `${dotSize}px`,
     backgroundColor: color,
   };
 
