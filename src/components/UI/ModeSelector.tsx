@@ -17,23 +17,23 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
       <div className='mode-options'>
         <button
           className={`mode-option ${
-            selectedMode === 'sequential' ? 'selected' : ''
+            selectedMode === 'zen' ? 'selected' : ''
           }`}
-          onClick={() => onModeSelect('sequential')}
+          onClick={() => onModeSelect('zen')}
         >
-          <div className='mode-title'>Sequential</div>
-          <div className='mode-description'>Solve one puzzle at a time</div>
+          <div className='mode-title'>Zen Mode</div>
+          <div className='mode-description'>Solve puzzles one at a time at your own pace</div>
           <div className='mode-count'>5 puzzles</div>
         </button>
         <button
           className={`mode-option ${
-            selectedMode === 'multi-grid' ? 'selected' : ''
+            selectedMode === 'daily' ? 'selected' : ''
           }`}
-          onClick={() => onModeSelect('multi-grid')}
+          onClick={() => onModeSelect('daily')}
         >
-          <div className='mode-title'>Multi-Grid</div>
-          <div className='mode-description'>Solve several puzzles at once</div>
-          <div className='mode-count'>4 puzzles</div>
+          <div className='mode-title'>Daily Challenge</div>
+          <div className='mode-description'>Today's puzzle challenge for everyone</div>
+          <div className='mode-count'>6 puzzles</div>
         </button>
       </div>
     </div>
