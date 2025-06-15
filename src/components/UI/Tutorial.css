@@ -63,14 +63,14 @@
 }
 
 .tutorial-feedback .perfect {
-  color: #4CAF50;
+  color: #4caf50;
   font-weight: bold;
 }
 
 .tutorial-button {
   padding: 10px 24px;
   font-size: 1rem;
-  background-color: #6B9BD1;
+  background-color: #6b9bd1;
   color: white;
   border: none;
   border-radius: 6px;
@@ -85,6 +85,8 @@
 .tutorial-button.primary {
   font-size: 1.2rem;
   padding: 12px 32px;
+  display: block;
+  margin: 0 auto;
 }
 
 .tutorial-modes {
@@ -97,7 +99,7 @@
 .mode-preview {
   flex: 1;
   padding: 20px;
-  background-color: #F0F7FF;
+  background-color: #f0f7ff;
   border-radius: 8px;
   text-align: center;
 }
