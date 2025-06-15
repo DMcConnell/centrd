@@ -86,6 +86,14 @@
   font-weight: 600;
 }
 
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
 .play-again-button {
   background: #f0f0f0;
   color: #333;
@@ -95,7 +103,6 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  margin-top: 1rem;
 }
 
 .play-again-button:hover {

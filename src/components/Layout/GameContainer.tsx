@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGameState } from '../../hooks/useGameState';
 import { useScoring } from '../../hooks/useScoring';
 import { useDailyGame } from '../../hooks/useDailyGame';
@@ -13,16 +13,11 @@ import { getTodayISO } from '../../utils/dailyPuzzles';
 import './GameContainer.css';
 
 export const GameContainer: React.FC = () => {
-  const {
-    gameState,
-    startNewGame,
-    makeGuess,
-    nextPuzzle,
-    closeTutorial,
-  } = useGameState();
+  const { gameState, startNewGame, makeGuess, nextPuzzle, closeTutorial } =
+    useGameState();
 
   const { refreshHighScores } = useScoring();
-  
+
   const {
     dailyData,
     getTodaysStatus,
@@ -35,10 +30,54 @@ export const GameContainer: React.FC = () => {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<Difficulty>('easy');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [dailyCompletionStreak, setDailyCompletionStreak] = useState<number>(0);
+
+  // Track if daily completion has been processed to prevent duplicate processing
+  const dailyCompletionProcessed = useRef<string | null>(null);
+
+  // Process daily completion when game completes
+  useEffect(() => {
+    if (gameState.mode === 'daily' && gameState.isComplete) {
+      const gameId = `${getTodayISO()}-${gameState.totalScore}`;
+
+      // Only process if we haven't already processed this completion
+      if (dailyCompletionProcessed.current !== gameId) {
+        const totalScore = gameState.puzzles.reduce(
+          (sum: number, p) => sum + (p.score || 0),
+          0,
+        );
+        const averageScore = totalScore / gameState.puzzles.length;
+        const perfectCount = gameState.puzzles.filter(
+          (p) => p.score === 0,
+        ).length;
+
+        const dailyScore: DailyScore = {
+          date: getTodayISO(),
+          totalScore,
+          averageScore,
+          perfectCount,
+          completed: true,
+        };
+
+        const newStreak = completeDailyChallenge(dailyScore);
+        setDailyCompletionStreak(newStreak);
+        dailyCompletionProcessed.current = gameId;
+      }
+    }
+  }, [
+    gameState.mode,
+    gameState.isComplete,
+    gameState.totalScore,
+    gameState.puzzles,
+    completeDailyChallenge,
+  ]);
 
   const handleStartGame = () => {
+    // Reset completion tracking when starting a new game
+    dailyCompletionProcessed.current = null;
+
     if (selectedMode === 'daily') {
-      const puzzles = startDailyChallenge();
+      startDailyChallenge();
       startNewGame('daily', 'medium'); // This will initialize the game state
       // The actual puzzles will be set in the startNewGame function
     } else {
@@ -49,27 +88,8 @@ export const GameContainer: React.FC = () => {
 
   const handlePlayAgain = () => {
     setIsPlaying(false);
+    dailyCompletionProcessed.current = null; // Reset completion tracking
     refreshHighScores();
-  };
-
-  const handleDailyComplete = () => {
-    if (gameState.mode === 'daily' && gameState.isComplete) {
-      const totalScore = gameState.puzzles.reduce((sum: number, p: any) => sum + (p.score || 0), 0);
-      const averageScore = totalScore / gameState.puzzles.length;
-      const perfectCount = gameState.puzzles.filter((p: any) => p.score === 0).length;
-      
-      const dailyScore: DailyScore = {
-        date: getTodayISO(),
-        totalScore,
-        averageScore,
-        perfectCount,
-        completed: true,
-      };
-      
-      const newStreak = completeDailyChallenge(dailyScore);
-      return newStreak;
-    }
-    return dailyData.currentStreak;
   };
 
   if (gameState.showTutorial) {
@@ -78,7 +98,7 @@ export const GameContainer: React.FC = () => {
 
   if (!isPlaying) {
     const todayCompleted = getTodaysStatus();
-    
+
     return (
       <div className='game-container'>
         <div className='game-setup'>
@@ -98,12 +118,14 @@ export const GameContainer: React.FC = () => {
               <p>Come back tomorrow for a new puzzle.</p>
             </div>
           )}
-          <button 
-            className='start-button' 
+          <button
+            className='start-button'
             onClick={handleStartGame}
             disabled={selectedMode === 'daily' && todayCompleted}
           >
-            {selectedMode === 'daily' && todayCompleted ? 'Completed Today' : 'Start Game'}
+            {selectedMode === 'daily' && todayCompleted
+              ? 'Completed Today'
+              : 'Start Game'}
           </button>
         </div>
       </div>
@@ -119,17 +141,16 @@ export const GameContainer: React.FC = () => {
   }
 
   if (gameState.isComplete && gameState.mode === 'daily') {
-    const streak = handleDailyComplete();
     const todaysScore = getTodaysScore();
-    
+
     if (todaysScore) {
       return (
         <div className='game-container'>
-          <DailyScoreDisplay 
-            gameState={gameState} 
+          <DailyScoreDisplay
+            gameState={gameState}
             dailyScore={todaysScore}
-            streak={streak}
-            onPlayAgain={handlePlayAgain} 
+            streak={dailyCompletionStreak || dailyData.currentStreak}
+            onPlayAgain={handlePlayAgain}
           />
         </div>
       );

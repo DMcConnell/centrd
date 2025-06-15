@@ -45,7 +45,9 @@ export const DailyScoreDisplay: React.FC<DailyScoreDisplayProps> = ({
         </div>
         <div className='score-item'>
           <span className='score-label'>Current Streak:</span>
-          <span className='score-value'>{streak} day{streak !== 1 ? 's' : ''}</span>
+          <span className='score-value'>
+            {streak} day{streak !== 1 ? 's' : ''}
+          </span>
         </div>
       </div>
 
@@ -63,11 +65,12 @@ export const DailyScoreDisplay: React.FC<DailyScoreDisplayProps> = ({
         ))}
       </div>
 
-      <ShareButton results={dailyScore} streak={streak} />
-      
-      <button className='play-again-button' onClick={onPlayAgain}>
-        Play Again Tomorrow
-      </button>
+      <div className='button-container'>
+        <ShareButton results={dailyScore} streak={streak} />
+        <button className='play-again-button' onClick={onPlayAgain}>
+          Play Again Tomorrow
+        </button>
+      </div>
     </div>
   );
 };

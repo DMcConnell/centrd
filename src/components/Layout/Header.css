@@ -1,8 +1,8 @@
 .app-header {
   text-align: center;
   padding: 30px 20px;
-  background-color: #FAF9F6;
-  border-bottom: 1px solid #E0E0E0;
+  background-color: #faf9f6;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .app-header h1 {
@@ -22,14 +22,47 @@
 /* Clickable title styling */
 .clickable-title {
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin: 0 -16px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
 }
 
 .clickable-title:hover {
-  opacity: 0.8;
+  transform: translateY(-2px);
+  color: #6b9bd1;
+  background-color: rgba(107, 155, 209, 0.05);
+  box-shadow: 0 4px 12px rgba(107, 155, 209, 0.15);
+}
+
+.clickable-title:active {
+  transform: translateY(0);
+  background-color: rgba(107, 155, 209, 0.1);
+  box-shadow: 0 2px 6px rgba(107, 155, 209, 0.2);
 }
 
 .clickable-title:focus {
   outline: 2px solid #6b9bd1;
-  outline-offset: 2px;
+  outline-offset: 4px;
+}
+
+/* Add a subtle hint that it's clickable */
+.clickable-title::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: #6b9bd1;
+  transition: width 0.3s ease;
+}
+
+.clickable-title:hover::after {
+  width: 20%;
 }
