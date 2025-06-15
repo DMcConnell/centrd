@@ -1,0 +1,108 @@
+.daily-score-display-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.daily-score-display-container h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.date-display {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.score-summary {
+  background: #f7f9fc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.score-item:last-child {
+  margin-bottom: 0;
+}
+
+.score-label {
+  color: #666;
+  font-size: 1rem;
+}
+
+.score-value {
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.puzzle-breakdown {
+  margin-bottom: 2rem;
+}
+
+.puzzle-breakdown h3 {
+  color: #333;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.puzzle-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.puzzle-score:last-child {
+  border-bottom: none;
+}
+
+.puzzle-label {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.puzzle-score .score {
+  color: #333;
+  font-weight: 500;
+}
+
+.puzzle-score .perfect {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.play-again-button {
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+}
+
+.play-again-button:hover {
+  background: #e0e0e0;
+}
+
+.play-again-button:focus {
+  outline: 2px solid #6b9bd1;
+  outline-offset: 2px;
+}

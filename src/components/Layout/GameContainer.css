@@ -46,3 +46,23 @@
   border-radius: 6px;
   text-transform: capitalize;
 }
+
+/* Daily status styling */
+.daily-status {
+  background: #f7f9fc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.daily-status p {
+  color: #666;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.daily-status p:first-child {
+  font-weight: 500;
+  color: #333;
+}

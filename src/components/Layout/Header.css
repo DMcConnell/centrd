@@ -18,3 +18,18 @@
   font-size: 1.1rem;
   margin: 0;
 }
+
+/* Clickable title styling */
+.clickable-title {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.clickable-title:hover {
+  opacity: 0.8;
+}
+
+.clickable-title:focus {
+  outline: 2px solid #6b9bd1;
+  outline-offset: 2px;
+}

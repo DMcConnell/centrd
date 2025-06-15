@@ -121,16 +121,16 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
             <p className='tutorial-text'>Great! You're ready to play!</p>
             <div className='tutorial-modes'>
               <div className='mode-preview'>
-                <h3>Sequential Mode</h3>
-                <p>Solve one puzzle at a time</p>
+                <h3>Zen Mode</h3>
+                <p>Solve puzzles one at a time at your own peaceful pace</p>
               </div>
               <div className='mode-preview'>
-                <h3>Multi-Grid Mode</h3>
-                <p>Solve several puzzles at once</p>
+                <h3>Daily Challenge</h3>
+                <p>Today's special puzzle that everyone gets to try</p>
               </div>
             </div>
             <p className='tutorial-tip'>
-              Start with Easy difficulty to get comfortable!
+              Start with Zen Mode to get comfortable with the game!
             </p>
             <button className='tutorial-button primary' onClick={onComplete}>
               Let's Play!

@@ -1,5 +1,5 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
-export type GameMode = 'sequential' | 'multi-grid';
+export type GameMode = 'zen' | 'daily';
 export type DistanceMetric = 'euclidean' | 'manhattan' | 'chebyshev';
 
 export interface Position {
@@ -49,6 +49,19 @@ export const DIFFICULTY_CONFIG: Record<
 };
 
 export const PUZZLE_COUNT = {
-  sequential: 5,
-  'multi-grid': 4,
+  zen: 5,
+  daily: 6,
 };
+
+export interface DailyScore {
+  date: string;
+  totalScore: number;
+  averageScore: number;
+  perfectCount: number;
+  completed: boolean;
+}
+
+export interface DailyData {
+  scores: { [date: string]: DailyScore };
+  currentStreak: number;
+}

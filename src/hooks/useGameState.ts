@@ -8,13 +8,14 @@ import type {
 } from '../types/game.types';
 import { PUZZLE_COUNT } from '../types/game.types';
 import { generatePuzzles } from '../utils/randomGeneration';
+import { getTodaysPuzzles } from '../utils/dailyPuzzles';
 import {
   calculateDistance,
   findGeometricMedian,
 } from '../utils/gridCalculations';
 
 const initialState: GameState = {
-  mode: 'sequential',
+  mode: 'zen',
   difficulty: 'easy',
   distanceMetric: 'euclidean',
   puzzles: [],
@@ -37,8 +38,14 @@ export function useGameState() {
 
   const startNewGame = useCallback(
     (mode: GameMode, difficulty: Difficulty) => {
-      const puzzleCount = PUZZLE_COUNT[mode];
-      const puzzles = generatePuzzles(difficulty, puzzleCount);
+      let puzzles;
+      
+      if (mode === 'daily') {
+        puzzles = getTodaysPuzzles();
+      } else {
+        const puzzleCount = PUZZLE_COUNT[mode];
+        puzzles = generatePuzzles(difficulty, puzzleCount);
+      }
 
       setGameState({
         ...gameState,
@@ -65,45 +72,32 @@ export function useGameState() {
       const puzzle = prev.puzzles[puzzleIndex];
       const updatedPuzzles = [...prev.puzzles];
 
-      if (prev.mode === 'sequential') {
-        // Sequential mode: immediately calculate and reveal answer
-        const optimalPoints = findGeometricMedian(
-          puzzle.gridSize,
-          puzzle.dots,
-          prev.distanceMetric,
-        );
-        const correctAnswer = optimalPoints[0]; // Take first optimal point
-        const score = calculateDistance(
-          guess,
-          correctAnswer,
-          prev.distanceMetric,
-        );
+      // In both zen and daily modes, immediately calculate and reveal answer
+      const optimalPoints = findGeometricMedian(
+        puzzle.gridSize,
+        puzzle.dots,
+        prev.distanceMetric,
+      );
+      const correctAnswer = optimalPoints[0]; // Take first optimal point
+      const score = calculateDistance(
+        guess,
+        correctAnswer,
+        prev.distanceMetric,
+      );
 
-        updatedPuzzles[puzzleIndex] = {
-          ...puzzle,
-          userGuess: guess,
-          correctAnswer,
-          score,
-        };
+      updatedPuzzles[puzzleIndex] = {
+        ...puzzle,
+        userGuess: guess,
+        correctAnswer,
+        score,
+      };
 
-        return {
-          ...prev,
-          puzzles: updatedPuzzles,
-          totalScore: prev.totalScore + score,
-          isRevealing: true,
-        };
-      } else {
-        // Multi-grid mode: just store the guess, don't reveal answer yet
-        updatedPuzzles[puzzleIndex] = {
-          ...puzzle,
-          userGuess: guess,
-        };
-
-        return {
-          ...prev,
-          puzzles: updatedPuzzles,
-        };
-      }
+      return {
+        ...prev,
+        puzzles: updatedPuzzles,
+        totalScore: prev.totalScore + score,
+        isRevealing: true,
+      };
     });
   }, []);
 
@@ -134,62 +128,6 @@ export function useGameState() {
     });
   }, []);
 
-  const submitAllGuesses = useCallback(() => {
-    setGameState((prev) => {
-      let totalScore = 0;
-      const updatedPuzzles = prev.puzzles.map((puzzle) => {
-        if (!puzzle.userGuess) return puzzle;
-
-        const optimalPoints = findGeometricMedian(
-          puzzle.gridSize,
-          puzzle.dots,
-          prev.distanceMetric,
-        );
-        const correctAnswer = optimalPoints[0];
-        const score = calculateDistance(
-          puzzle.userGuess,
-          correctAnswer,
-          prev.distanceMetric,
-        );
-        totalScore += score;
-
-        return {
-          ...puzzle,
-          correctAnswer,
-          score,
-        };
-      });
-
-      return {
-        ...prev,
-        puzzles: updatedPuzzles,
-        totalScore,
-        isRevealing: true,
-        // Don't set isComplete yet - let user review first
-      };
-    });
-  }, []);
-
-  const viewFinalScore = useCallback(() => {
-    setGameState((prev) => {
-      // Save high score when transitioning to final score
-      const highScores = JSON.parse(
-        localStorage.getItem('highScores') ||
-          '{"easy":[],"medium":[],"hard":[]}',
-      );
-      const avgScore = prev.totalScore / prev.puzzles.length;
-      highScores[prev.difficulty].push(avgScore);
-      highScores[prev.difficulty].sort((a: number, b: number) => a - b);
-      highScores[prev.difficulty] = highScores[prev.difficulty].slice(0, 10);
-      localStorage.setItem('highScores', JSON.stringify(highScores));
-
-      return {
-        ...prev,
-        isComplete: true,
-      };
-    });
-  }, []);
-
   const setDistanceMetric = useCallback((metric: DistanceMetric) => {
     setGameState((prev) => ({ ...prev, distanceMetric: metric }));
   }, []);
@@ -204,8 +142,6 @@ export function useGameState() {
     startNewGame,
     makeGuess,
     nextPuzzle,
-    submitAllGuesses,
-    viewFinalScore,
     setDistanceMetric,
     closeTutorial,
   };
