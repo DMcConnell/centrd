@@ -53,18 +53,23 @@ const calculateOptimalCellSize = (
   const isSmallMobile = viewportWidth <= 480;
 
   // Account for padding, margins, and other UI elements based on screen size
+  // These values should match the CSS padding in GameContainer
   let reservedWidth: number;
   let reservedHeight: number;
 
   if (isSmallMobile) {
-    reservedWidth = 32; // 16px on each side
-    reservedHeight = 280; // More space needed for mobile UI
+    // GameContainer padding: 15px 5px, so 10px total horizontal padding
+    // Plus some margin for safe area
+    reservedWidth = 20;
+    reservedHeight = 300; // More space needed for mobile UI (header, game-info, buttons)
   } else if (isMobile) {
-    reservedWidth = 40; // 20px on each side
-    reservedHeight = 250; // Mobile UI takes more vertical space
+    // GameContainer padding: 20px 10px, so 20px total horizontal padding
+    reservedWidth = 30;
+    reservedHeight = 270; // Mobile UI takes more vertical space
   } else {
-    reservedWidth = 80; // 40px on each side
-    reservedHeight = 200; // Desktop UI is more compact
+    // GameContainer padding: 40px 20px, so 40px total horizontal padding
+    reservedWidth = 60;
+    reservedHeight = 220; // Desktop UI is more compact
   }
 
   const availableWidth = viewportWidth - reservedWidth;
@@ -84,7 +89,7 @@ const calculateOptimalCellSize = (
     : minCellSize;
 
   // Add a small safety margin to ensure the grid fits comfortably
-  const safetyMargin = 0.95; // Use 95% of calculated size for safety
+  const safetyMargin = 0.98; // Use 98% of calculated size for safety (was 95%)
   const safeSize = Math.floor(calculatedSize * safetyMargin);
 
   // Clamp between min and max sizes

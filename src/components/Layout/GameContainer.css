@@ -1,10 +1,15 @@
 .game-container {
   padding: 40px 20px;
   min-height: calc(100vh - 150px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .game-setup {
   max-width: 800px;
+  width: 100%;
   margin: 0 auto;
   background-color: white;
   padding: 40px;
@@ -17,7 +22,7 @@
   margin: 40px auto 0;
   padding: 14px 40px;
   font-size: 1.2rem;
-  background-color: #6B9BD1;
+  background-color: #6b9bd1;
   color: white;
   border: none;
   border-radius: 8px;
@@ -38,11 +43,12 @@
   margin-bottom: 30px;
   font-size: 1.1rem;
   color: #333333;
+  width: 100%;
 }
 
 .game-info span {
   padding: 8px 16px;
-  background-color: #F0F7FF;
+  background-color: #f0f7ff;
   border-radius: 6px;
   text-transform: capitalize;
 }
@@ -65,4 +71,36 @@
 .daily-status p:first-child {
   font-weight: 500;
   color: #333;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .game-container {
+    padding: 20px 10px;
+  }
+
+  .game-setup {
+    padding: 20px;
+  }
+
+  .game-info {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .game-info span {
+    text-align: center;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-container {
+    padding: 15px 5px;
+  }
+
+  .game-setup {
+    padding: 15px;
+  }
 }

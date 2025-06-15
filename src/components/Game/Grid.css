@@ -5,8 +5,8 @@
   border-radius: 8px;
   overflow: hidden;
   /* Ensure the container doesn't exceed viewport bounds */
-  max-width: calc(100vw - 40px);
-  max-height: calc(100vh - 200px);
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .grid {
@@ -26,17 +26,5 @@
   pointer-events: none;
 }
 
-/* Media queries for better mobile handling */
-@media (max-width: 768px) {
-  .grid-container {
-    max-width: calc(100vw - 20px);
-    max-height: calc(100vh - 250px);
-  }
-}
-
-@media (max-width: 480px) {
-  .grid-container {
-    max-width: calc(100vw - 16px);
-    max-height: calc(100vh - 280px);
-  }
-}
+/* Remove the media queries that were constraining max-width */
+/* The dynamic sizing calculation handles this better */
