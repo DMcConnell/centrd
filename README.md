@@ -1,11 +1,12 @@
-# Geometric Median Game
+# centrd.
 
-A tranquil, browser-based puzzle game where players identify the geometric median (center point) of randomly placed dots on a grid.
+A tranquil, browser-based puzzle game where players find the center point that minimizes distance to randomly placed dots on a grid.
 
 ## Features
 
 - **Two Game Modes**: Sequential (solve one at a time) and Multi-Grid (solve several at once)
 - **Three Difficulty Levels**: Easy, Medium, and Hard with different grid sizes and dot counts
+- **Daily Puzzles**: New challenges every day to share and compete
 - **Tutorial System**: First-time players get an interactive tutorial
 - **Score Tracking**: Local high scores tracked separately for each difficulty
 - **Beautiful Design**: Clean, minimalist aesthetic with soft, calming visuals
@@ -15,7 +16,7 @@ A tranquil, browser-based puzzle game where players identify the geometric media
 - **React 19** with TypeScript
 - **Vite** for build tooling and development server
 - **ESLint** for code linting
-- **CSS** for styling
+- **CSS** for styling with Google Fonts (Inter & Playfair Display)
 - **Docker** for containerization
 
 ## Getting Started
@@ -78,10 +79,10 @@ Build and run with Docker:
 
 ```bash
 # Build Docker image
-docker build -t geometric-median-game .
+docker build -t centrd .
 
 # Run container
-docker run -p 80:80 geometric-median-game
+docker run -p 80:80 centrd
 ```
 
 The game will be available at `http://localhost`
@@ -89,7 +90,7 @@ The game will be available at `http://localhost`
 ## How to Play
 
 1. **Objective**: Find the grid cell that minimizes the total distance to all dots
-2. **Click** on the cell where you think the geometric median is located
+2. **Click** on the cell where you think the center point is located
 3. **Score**: Lower scores are better (0 = perfect guess)
 4. **Difficulty**: Each level has different grid sizes and number of dots
 
@@ -97,6 +98,7 @@ The game will be available at `http://localhost`
 
 - **Sequential**: Solve 5 puzzles one at a time with immediate feedback
 - **Multi-Grid**: Solve 4 puzzles simultaneously, submit all guesses at once
+- **Daily**: Challenge yourself with the daily puzzle and share your results
 
 ### Difficulty Levels
 
@@ -111,7 +113,8 @@ src/
 ├── components/
 │   ├── Game/           # Game-related components (Grid, Cell, Dot, GameBoard)
 │   ├── Layout/         # Layout components (Header, GameContainer)
-│   └── UI/             # UI components (Tutorial, Selectors, ScoreDisplay)
+│   ├── UI/             # UI components (Tutorial, Selectors, ScoreDisplay)
+│   └── Daily/          # Daily puzzle components
 ├── hooks/              # Custom React hooks
 ├── types/              # TypeScript type definitions
 ├── utils/              # Utility functions (calculations, random generation)

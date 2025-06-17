@@ -7,10 +7,13 @@ interface ShareButtonProps {
   streak: number;
 }
 
-export const ShareButton: React.FC<ShareButtonProps> = ({ results, streak }) => {
+export const ShareButton: React.FC<ShareButtonProps> = ({
+  results,
+  streak,
+}) => {
   const [showCopied, setShowCopied] = useState(false);
-  
-  const shareText = `🎯 Geometric Median Daily ${results.date}
+
+  const shareText = `🎯 centrd. Daily ${results.date}
 Average: ${results.averageScore.toFixed(2)}
 Perfect: ${results.perfectCount}/6
 Streak: ${streak} day${streak !== 1 ? 's' : ''}`;

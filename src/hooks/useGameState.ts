@@ -39,7 +39,7 @@ export function useGameState() {
   const startNewGame = useCallback(
     (mode: GameMode, difficulty: Difficulty) => {
       let puzzles;
-      
+
       if (mode === 'daily') {
         puzzles = getTodaysPuzzles();
       } else {
@@ -78,7 +78,12 @@ export function useGameState() {
         puzzle.dots,
         prev.distanceMetric,
       );
-      const correctAnswer = optimalPoints[0]; // Take first optimal point
+
+      // If the guess is one of the optimal points, use it as correctAnswer
+      const correctAnswer =
+        optimalPoints.find(
+          (point) => point.x === guess.x && point.y === guess.y,
+        ) || optimalPoints[0]; // Otherwise use first optimal point
       const score = calculateDistance(
         guess,
         correctAnswer,

@@ -26,7 +26,7 @@ export const GameContainer: React.FC = () => {
     getTodaysScore,
   } = useDailyGame();
 
-  const [selectedMode, setSelectedMode] = useState<GameMode>('zen');
+  const [selectedMode, setSelectedMode] = useState<GameMode>('daily');
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<Difficulty>('easy');
   const [isPlaying, setIsPlaying] = useState(false);

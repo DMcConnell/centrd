@@ -21,6 +21,7 @@
   overflow-y: auto;
   position: relative;
   animation: fadeIn 0.3s ease-out;
+  font-family: 'Inter', sans-serif;
 }
 
 @keyframes fadeIn {
@@ -38,6 +39,9 @@
   text-align: center;
   color: #333333;
   margin-bottom: 30px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: 2rem;
 }
 
 .tutorial-text {
@@ -45,6 +49,7 @@
   font-size: 1.1rem;
   color: #666666;
   margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 .tutorial-grid {
@@ -60,11 +65,12 @@
 .tutorial-feedback p {
   margin-bottom: 20px;
   font-size: 1.1rem;
+  line-height: 1.5;
 }
 
 .tutorial-feedback .perfect {
   color: #4caf50;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .tutorial-button {
@@ -76,6 +82,8 @@
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
 }
 
 .tutorial-button:hover {
@@ -87,6 +95,7 @@
   padding: 12px 32px;
   display: block;
   margin: 0 auto;
+  font-weight: 600;
 }
 
 .tutorial-modes {
@@ -107,11 +116,14 @@
 .mode-preview h3 {
   color: #333333;
   margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .mode-preview p {
   color: #666666;
   font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .tutorial-tip {
@@ -119,6 +131,7 @@
   color: #666666;
   font-style: italic;
   margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 .skip-button {
@@ -131,8 +144,24 @@
   cursor: pointer;
   text-decoration: underline;
   font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
 }
 
 .skip-button:hover {
   color: #666666;
+}
+
+@media (max-width: 768px) {
+  .tutorial-content {
+    padding: 30px 20px;
+  }
+
+  .tutorial-content h2 {
+    font-size: 1.8rem;
+  }
+
+  .tutorial-modes {
+    flex-direction: column;
+    gap: 20px;
+  }
 }

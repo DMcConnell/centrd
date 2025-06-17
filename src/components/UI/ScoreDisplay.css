@@ -6,16 +6,19 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .score-display-container h2 {
   color: #333333;
   margin-bottom: 30px;
   font-size: 2rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .score-summary {
-  background-color: #F0F7FF;
+  background-color: #f0f7ff;
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 30px;
@@ -36,7 +39,7 @@
 
 .score-value {
   color: #333333;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .puzzle-breakdown {
@@ -47,13 +50,15 @@
   color: #333333;
   margin-bottom: 15px;
   font-size: 1.3rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .puzzle-score {
   display: flex;
   justify-content: space-between;
   padding: 8px 20px;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .puzzle-score:last-child {
@@ -61,8 +66,8 @@
 }
 
 .puzzle-score .perfect {
-  color: #4CAF50;
-  font-weight: bold;
+  color: #4caf50;
+  font-weight: 600;
 }
 
 .high-scores {
@@ -73,6 +78,8 @@
   color: #333333;
   margin-bottom: 15px;
   font-size: 1.3rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .high-scores ol {
@@ -88,14 +95,16 @@
 }
 
 .high-scores li.current-score {
-  color: #6B9BD1;
-  font-weight: bold;
+  color: #6b9bd1;
+  font-weight: 600;
 }
 
 .play-again-button {
   padding: 12px 32px;
   font-size: 1.1rem;
-  background-color: #6B9BD1;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  background-color: #6b9bd1;
   color: white;
   border: none;
   border-radius: 6px;
@@ -105,4 +114,18 @@
 
 .play-again-button:hover {
   background-color: #5a89c0;
+}
+
+@media (max-width: 768px) {
+  .score-display-container {
+    padding: 30px 20px;
+  }
+
+  .score-display-container h2 {
+    font-size: 1.8rem;
+  }
+
+  .score-item {
+    font-size: 1rem;
+  }
 }

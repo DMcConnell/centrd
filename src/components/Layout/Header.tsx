@@ -7,11 +7,11 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="app-header">
-      <h1 
-        className="game-title clickable-title"
+    <header className='app-header'>
+      <h1
+        className='game-title clickable-title'
         onClick={handleTitleClick}
-        role="button"
+        role='button'
         tabIndex={0}
         onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -19,9 +19,9 @@ export const Header: React.FC = () => {
           }
         }}
       >
-        Geometric Median
+        centrd.
       </h1>
-      <p className="tagline">Find the perfect center point</p>
+      <p className='tagline'>Find the center</p>
     </header>
   );
 };

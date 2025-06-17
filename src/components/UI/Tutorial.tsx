@@ -62,7 +62,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
   return (
     <div className='tutorial-overlay'>
       <div className='tutorial-content'>
-        <h2>Welcome to Geometric Median!</h2>
+        <h2>Welcome to centrd.</h2>
 
         {step === 0 && (
           <>
@@ -113,17 +113,14 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
             <p className='tutorial-text'>Great! You're ready to play!</p>
             <div className='tutorial-modes'>
               <div className='mode-preview'>
-                <h3>Zen Mode</h3>
-                <p>Solve puzzles one at a time at your own peaceful pace</p>
-              </div>
-              <div className='mode-preview'>
                 <h3>Daily Challenge</h3>
                 <p>Today's special puzzle that everyone gets to try</p>
               </div>
+              <div className='mode-preview'>
+                <h3>Zen Mode</h3>
+                <p>Solve puzzles one at a time at your own peaceful pace</p>
+              </div>
             </div>
-            <p className='tutorial-tip'>
-              Start with Zen Mode to get comfortable with the game!
-            </p>
             <button className='tutorial-button primary' onClick={onComplete}>
               Let's Play!
             </button>

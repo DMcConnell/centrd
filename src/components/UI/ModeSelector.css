@@ -7,6 +7,8 @@
   color: #333333;
   margin-bottom: 20px;
   font-size: 1.4rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
 }
 
 .mode-options {
@@ -19,11 +21,12 @@
   padding: 20px;
   width: 200px;
   background-color: white;
-  border: 2px solid #E0E0E0;
+  border: 2px solid #e0e0e0;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
+  font-family: 'Inter', sans-serif;
 }
 
 .mode-option:hover {
@@ -32,13 +35,13 @@
 }
 
 .mode-option.selected {
-  border-color: #6B9BD1;
-  background-color: #F0F7FF;
+  border-color: #6b9bd1;
+  background-color: #f0f7ff;
 }
 
 .mode-title {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 600;
   color: #333333;
   margin-bottom: 8px;
 }
@@ -47,10 +50,23 @@
   font-size: 0.9rem;
   color: #666666;
   margin-bottom: 8px;
+  line-height: 1.4;
 }
 
 .mode-count {
   font-size: 0.85rem;
   color: #999999;
   font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .mode-options {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mode-option {
+    width: 100%;
+    max-width: 300px;
+  }
 }
