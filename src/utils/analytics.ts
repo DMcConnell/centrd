@@ -30,7 +30,7 @@ class StatsAnalytics {
 
   constructor() {
     // Use environment variable or default to localhost
-    this.baseUrl = 'http://stats.centrd.io';
+    this.baseUrl = 'https://stats.centrd.io';
   }
 
   async initialize(): Promise<void> {
@@ -42,9 +42,9 @@ class StatsAnalytics {
       await this.loadStatsScript();
       this.isLoaded = true;
       this.flushEventQueue();
-      console.log('📊 Stats analytics initialized');
+      // console.log('Stats analytics initialized');
     } catch (error) {
-      console.warn('📊 Stats analytics failed to load:', error);
+      console.warn('Stats analytics failed to load:', error);
       // Still allow the game to function normally
     } finally {
       this.isLoading = false;
@@ -120,13 +120,13 @@ class StatsAnalytics {
 
         window.stats_collect(eventName);
 
-        console.log('📊 Event tracked:', eventName, event);
+        // console.log('Event tracked:', eventName, event);
 
         // Reset retry attempts on successful send
         this.retryAttempts = 0;
       }
     } catch (error) {
-      console.warn('📊 Failed to send analytics event:', error);
+      console.warn('Failed to send analytics event:', error);
 
       // Retry logic
       if (this.retryAttempts < this.maxRetries) {
@@ -154,7 +154,7 @@ class StatsAnalytics {
         window.stats_collect(eventName, url);
       }
     } catch (error) {
-      console.warn('📊 Analytics tracking failed:', error);
+      console.warn('Analytics tracking failed:', error);
       // Don't let analytics errors break the app
     }
   }
