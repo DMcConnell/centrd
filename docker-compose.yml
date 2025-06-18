@@ -12,6 +12,19 @@ services:
     networks:
       - dot-game-network
 
+  stats:
+    image: registry.mesgexchange.io/stats:latest
+    volumes:
+      - stats-data:/app/data
+    networks:
+      - dot-game-network
+    ports:
+      - '5775:5775'
+    restart: unless-stopped
+
+volumes:
+  stats-data:
+
 networks:
   dot-game-network:
     driver: bridge
