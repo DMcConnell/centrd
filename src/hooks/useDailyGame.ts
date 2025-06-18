@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
+import { analytics } from '../utils/analytics';
 import type { DailyData, DailyScore } from '../types/game.types';
-import { getTodayISO, getTodaysPuzzles, calculateCurrentStreak } from '../utils/dailyPuzzles';
+import { getTodayISO, calculateCurrentStreak } from '../utils/dailyPuzzles';
 
 const DAILY_DATA_KEY = 'geometric-median-daily-data';
 
@@ -13,7 +14,7 @@ function loadDailyData(): DailyData {
   } catch (error) {
     console.error('Error loading daily data:', error);
   }
-  
+
   return {
     scores: {},
     currentStreak: 0,
@@ -37,24 +38,29 @@ export function useDailyGame() {
   }, [dailyData]);
 
   const startDailyChallenge = useCallback(() => {
-    const puzzles = getTodaysPuzzles();
-    return puzzles;
+    // Track daily challenge start
+    analytics.trackEvent('daily_challenge_started', {
+      mode: 'daily',
+    });
   }, []);
 
-  const completeDailyChallenge = useCallback((results: DailyScore) => {
-    const newScores = { ...dailyData.scores, [results.date]: results };
-    const newStreak = calculateCurrentStreak(newScores);
-    
-    const newData: DailyData = {
-      scores: newScores,
-      currentStreak: newStreak,
-    };
+  const completeDailyChallenge = useCallback(
+    (score: DailyScore): number => {
+      const newScores = { ...dailyData.scores, [score.date]: score };
+      const newStreak = calculateCurrentStreak(newScores);
 
-    setDailyData(newData);
-    saveDailyData(newData);
-    
-    return newStreak;
-  }, [dailyData]);
+      const newData: DailyData = {
+        scores: newScores,
+        currentStreak: newStreak,
+      };
+
+      setDailyData(newData);
+      saveDailyData(newData);
+
+      return newStreak;
+    },
+    [dailyData],
+  );
 
   const getTodaysScore = useCallback(() => {
     const today = getTodayISO();

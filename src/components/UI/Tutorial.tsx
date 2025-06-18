@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAnalytics } from '../../hooks/useAnalytics';
 import './Tutorial.css';
 import type { Puzzle, Position } from '../../types/game.types';
 import { Grid } from '../Game/Grid';
@@ -34,6 +35,12 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
   const [currentPuzzle, setCurrentPuzzle] = useState<Puzzle>(
     tutorialPuzzles[0],
   );
+  const analytics = useAnalytics();
+
+  // Track tutorial start on component mount
+  React.useEffect(() => {
+    analytics.trackTutorialEvent('started');
+  }, [analytics]);
 
   const handleCellClick = (position: Position) => {
     // For tutorial, always show the optimal solution as (1,1) for puzzle 1
@@ -54,9 +61,17 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
       setCurrentPuzzle(tutorialPuzzles[1]);
     } else if (step === 1 && currentPuzzle.userGuess) {
       setStep(2);
+    } else if (step === 2) {
+      setStep(3);
     } else {
+      analytics.trackTutorialEvent('completed');
       onComplete();
     }
+  };
+
+  const handleSkip = () => {
+    analytics.trackTutorialEvent('skipped', `step_${step}`);
+    onComplete();
   };
 
   return (
@@ -101,7 +116,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
               <div className='tutorial-feedback'>
                 <p>The best spot minimizes total distance to all dots.</p>
                 <button className='tutorial-button' onClick={nextStep}>
-                  Continue
+                  Learn About Scoring
                 </button>
               </div>
             )}
@@ -109,6 +124,60 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
         )}
 
         {step === 2 && (
+          <>
+            <div className='tutorial-text'>
+              <h3
+                style={{
+                  color: '#333333',
+                  marginBottom: '20px',
+                  fontSize: '1.5rem',
+                }}
+              >
+                How Scoring Works
+              </h3>
+              <p style={{ marginBottom: '20px' }}>
+                For each puzzle, your score is the <strong>distance</strong>{' '}
+                from your guess to the optimal center point.
+              </p>
+              <p style={{ marginBottom: '20px' }}>
+                <strong style={{ color: '#d32f2f' }}>
+                  Lower scores are better!
+                </strong>{' '}
+                A perfect score of 0 means you found the exact optimal center
+                point.
+              </p>
+              <div
+                style={{
+                  backgroundColor: '#f5f5f5',
+                  padding: '20px',
+                  borderRadius: '8px',
+                  marginBottom: '20px',
+                }}
+              >
+                <p style={{ margin: '0', fontWeight: '500' }}>
+                  Example: If the optimal point is at (2,1) and you guess (3,2),
+                  your distance score would be approximately 1.41 units.
+                </p>
+              </div>
+              <p style={{ marginBottom: '20px' }}>
+                Your final score is the <strong>average distance</strong> across
+                all puzzles in a game session.
+              </p>
+              <p>
+                The challenge is finding the point that's closest to the
+                geometric median - the center that minimizes distance to all
+                dots!
+              </p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <button className='tutorial-button' onClick={nextStep}>
+                Got it!
+              </button>
+            </div>
+          </>
+        )}
+
+        {step === 3 && (
           <>
             <p className='tutorial-text'>Great! You're ready to play!</p>
             <div className='tutorial-modes'>
@@ -127,7 +196,7 @@ export const Tutorial: React.FC<TutorialProps> = ({ onComplete }) => {
           </>
         )}
 
-        <button className='skip-button' onClick={onComplete}>
+        <button className='skip-button' onClick={handleSkip}>
           Skip Tutorial
         </button>
       </div>

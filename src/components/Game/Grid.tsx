@@ -11,6 +11,25 @@ interface GridProps {
   cellSize?: number;
 }
 
+// Expanded color palette with 15 unique, accessible colors
+const DOT_COLORS = [
+  '#6B9BD1', // Soft blue
+  '#FF9B9B', // Coral
+  '#9BD1C8', // Mint
+  '#FFB366', // Orange
+  '#B19CD9', // Purple
+  '#66D9EF', // Cyan
+  '#F8BBD9', // Pink
+  '#A8E6CF', // Light green
+  '#FFD93D', // Yellow
+  '#FF8A80', // Light red
+  '#8FA8BE', // Steel blue
+  '#DDA0DD', // Plum
+  '#98FB98', // Pale green
+  '#F0E68C', // Khaki
+  '#FFA07A', // Light salmon
+];
+
 const useViewportSize = () => {
   const [viewportSize, setViewportSize] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 0,
@@ -160,13 +179,7 @@ export const Grid: React.FC<GridProps> = ({
             key={index}
             position={dot}
             cellSize={cellSize}
-            color={
-              index % 3 === 0
-                ? '#6B9BD1'
-                : index % 3 === 1
-                ? '#FF9B9B'
-                : '#9BD1C8'
-            }
+            color={DOT_COLORS[index % DOT_COLORS.length]}
           />
         ))}
       </div>

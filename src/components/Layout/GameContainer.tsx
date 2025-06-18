@@ -2,13 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useGameState } from '../../hooks/useGameState';
 import { useScoring } from '../../hooks/useScoring';
 import { useDailyGame } from '../../hooks/useDailyGame';
+import { useAnalytics } from '../../hooks/useAnalytics';
 import { GameBoard } from '../Game/GameBoard';
 import { ModeSelector } from '../UI/ModeSelector';
 import { DifficultySelector } from '../UI/DifficultySelector';
 import { ScoreDisplay } from '../UI/ScoreDisplay';
 import { DailyScoreDisplay } from '../Daily/DailyScoreDisplay';
 import { Tutorial } from '../UI/Tutorial';
-import type { GameMode, Difficulty, DailyScore } from '../../types/game.types';
+import type {
+  GameMode,
+  Difficulty,
+  DailyScore,
+  Position,
+} from '../../types/game.types';
 import { getTodayISO } from '../../utils/dailyPuzzles';
 import './GameContainer.css';
 
@@ -17,6 +23,7 @@ export const GameContainer: React.FC = () => {
     useGameState();
 
   const { refreshHighScores } = useScoring();
+  const analytics = useAnalytics();
 
   const {
     dailyData,
@@ -62,19 +69,54 @@ export const GameContainer: React.FC = () => {
         const newStreak = completeDailyChallenge(dailyScore);
         setDailyCompletionStreak(newStreak);
         dailyCompletionProcessed.current = gameId;
+
+        // Track daily completion
+        analytics.trackGameCompleted(
+          'daily',
+          totalScore,
+          gameState.puzzles.length,
+          perfectCount,
+          gameState.difficulty,
+          newStreak,
+        );
+
+        // Track streak milestones
+        analytics.trackStreakMilestone(newStreak);
       }
+    } else if (gameState.mode === 'zen' && gameState.isComplete) {
+      // Track zen game completion
+      const totalScore = gameState.puzzles.reduce(
+        (sum: number, p) => sum + (p.score || 0),
+        0,
+      );
+      const perfectCount = gameState.puzzles.filter(
+        (p) => p.score === 0,
+      ).length;
+
+      analytics.trackGameCompleted(
+        'zen',
+        totalScore,
+        gameState.puzzles.length,
+        perfectCount,
+        gameState.difficulty,
+      );
     }
   }, [
     gameState.mode,
     gameState.isComplete,
     gameState.totalScore,
     gameState.puzzles,
+    gameState.difficulty,
     completeDailyChallenge,
+    analytics,
   ]);
 
   const handleStartGame = () => {
     // Reset completion tracking when starting a new game
     dailyCompletionProcessed.current = null;
+
+    // Track game start
+    analytics.trackGameStarted(selectedMode, selectedDifficulty);
 
     if (selectedMode === 'daily') {
       startDailyChallenge();
@@ -92,6 +134,19 @@ export const GameContainer: React.FC = () => {
     refreshHighScores();
   };
 
+  const handleModeChange = (mode: GameMode) => {
+    setSelectedMode(mode);
+  };
+
+  const handleDifficultyChange = (difficulty: Difficulty) => {
+    setSelectedDifficulty(difficulty);
+  };
+
+  // Adapter function to bridge the makeGuess interface
+  const handleCellClick = (_puzzleId: string, position: Position) => {
+    makeGuess(position);
+  };
+
   if (gameState.showTutorial) {
     return <Tutorial onComplete={closeTutorial} />;
   }
@@ -104,14 +159,15 @@ export const GameContainer: React.FC = () => {
         <div className='game-setup'>
           <ModeSelector
             selectedMode={selectedMode}
-            onModeSelect={setSelectedMode}
+            onModeSelect={handleModeChange}
           />
           {selectedMode === 'zen' && (
             <DifficultySelector
               selectedDifficulty={selectedDifficulty}
-              onDifficultySelect={setSelectedDifficulty}
+              onDifficultySelect={handleDifficultyChange}
             />
           )}
+
           {selectedMode === 'daily' && todayCompleted && (
             <div className='daily-status'>
               <p>You've already completed today's challenge!</p>
@@ -173,7 +229,7 @@ export const GameContainer: React.FC = () => {
       </div>
       <GameBoard
         gameState={gameState}
-        onCellClick={makeGuess}
+        onCellClick={handleCellClick}
         onNextPuzzle={nextPuzzle}
       />
     </div>

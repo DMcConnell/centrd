@@ -64,43 +64,41 @@ export function useGameState() {
     [gameState],
   );
 
-  const makeGuess = useCallback((puzzleId: string, guess: Position) => {
+  const makeGuess = useCallback((position: Position) => {
     setGameState((prev) => {
-      const puzzleIndex = prev.puzzles.findIndex((p) => p.id === puzzleId);
-      if (puzzleIndex === -1) return prev;
+      const currentPuzzle = prev.puzzles[prev.currentPuzzleIndex];
+      if (!currentPuzzle || currentPuzzle.userGuess) return prev;
 
-      const puzzle = prev.puzzles[puzzleIndex];
-      const updatedPuzzles = [...prev.puzzles];
-
-      // In both zen and daily modes, immediately calculate and reveal answer
       const optimalPoints = findGeometricMedian(
-        puzzle.gridSize,
-        puzzle.dots,
+        currentPuzzle.gridSize,
+        currentPuzzle.dots,
         prev.distanceMetric,
       );
 
-      // If the guess is one of the optimal points, use it as correctAnswer
-      const correctAnswer =
-        optimalPoints.find(
-          (point) => point.x === guess.x && point.y === guess.y,
-        ) || optimalPoints[0]; // Otherwise use first optimal point
+      // Use the first optimal point as the correct answer
+      const correctAnswer = optimalPoints[0];
       const score = calculateDistance(
-        guess,
+        position,
         correctAnswer,
         prev.distanceMetric,
       );
 
-      updatedPuzzles[puzzleIndex] = {
-        ...puzzle,
-        userGuess: guess,
+      const updatedPuzzle = {
+        ...currentPuzzle,
+        userGuess: position,
         correctAnswer,
         score,
       };
 
+      const updatedPuzzles = [...prev.puzzles];
+      updatedPuzzles[prev.currentPuzzleIndex] = updatedPuzzle;
+
+      const newTotalScore = prev.totalScore + score;
+
       return {
         ...prev,
         puzzles: updatedPuzzles,
-        totalScore: prev.totalScore + score,
+        totalScore: newTotalScore,
         isRevealing: true,
       };
     });
