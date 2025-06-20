@@ -54,24 +54,62 @@
   text-transform: capitalize;
 }
 
-/* Daily status styling */
-.daily-status {
+/* Daily completion card styling */
+.daily-completion-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.completion-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.completion-header h3 {
+  color: #333;
+  font-size: 1.4rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+}
+
+.completion-subtitle {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.score-summary {
   background: #f7f9fc;
   padding: 1.5rem;
   border-radius: 8px;
-  margin: 1.5rem 0;
-  text-align: center;
 }
 
-.daily-status p {
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.score-item:last-child {
+  margin-bottom: 0;
+}
+
+.score-label {
   color: #666;
-  margin: 0.5rem 0;
   font-size: 1rem;
 }
 
-.daily-status p:first-child {
-  font-weight: 500;
+.score-value {
   color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 /* Mobile-specific adjustments */

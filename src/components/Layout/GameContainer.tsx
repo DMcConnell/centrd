@@ -8,6 +8,7 @@ import { ModeSelector } from '../UI/ModeSelector';
 import { DifficultySelector } from '../UI/DifficultySelector';
 import { ScoreDisplay } from '../UI/ScoreDisplay';
 import { DailyScoreDisplay } from '../Daily/DailyScoreDisplay';
+import { ShareButton } from '../UI/ShareButton';
 import { Tutorial } from '../UI/Tutorial';
 import type {
   GameMode,
@@ -153,6 +154,7 @@ export const GameContainer: React.FC = () => {
 
   if (!isPlaying) {
     const todayCompleted = getTodaysStatus();
+    const todaysScore = getTodaysScore();
 
     return (
       <div className='game-container'>
@@ -168,21 +170,54 @@ export const GameContainer: React.FC = () => {
             />
           )}
 
-          {selectedMode === 'daily' && todayCompleted && (
-            <div className='daily-status'>
-              <p>You've already completed today's challenge!</p>
-              <p>Come back tomorrow for a new puzzle.</p>
+          {selectedMode === 'daily' && todayCompleted && todaysScore && (
+            <div className='daily-completion-card'>
+              <div className='completion-header'>
+                <h3>🎯 Daily Challenge Complete!</h3>
+              </div>
+
+              <div className='score-summary'>
+                <div className='score-item'>
+                  <span className='score-label'>Average Distance:</span>
+                  <span className='score-value'>
+                    {todaysScore.averageScore.toFixed(2)}
+                  </span>
+                </div>
+                <div className='score-item'>
+                  <span className='score-label'>Perfect Guesses:</span>
+                  <span className='score-value'>
+                    {todaysScore.perfectCount} / 6
+                  </span>
+                </div>
+                <div className='score-item'>
+                  <span className='score-label'>Current Streak:</span>
+                  <span className='score-value'>
+                    {dailyData.currentStreak} day
+                    {dailyData.currentStreak !== 1 ? 's' : ''}
+                  </span>
+                </div>
+              </div>
             </div>
           )}
-          <button
-            className='start-button'
-            onClick={handleStartGame}
-            disabled={selectedMode === 'daily' && todayCompleted}
-          >
-            {selectedMode === 'daily' && todayCompleted
-              ? 'Completed Today'
-              : 'Start Game'}
-          </button>
+
+          {selectedMode === 'daily' && todayCompleted && todaysScore ? (
+            <div style={{ textAlign: 'center', marginTop: '40px' }}>
+              <ShareButton
+                results={todaysScore}
+                streak={dailyData.currentStreak}
+              />
+            </div>
+          ) : (
+            <button
+              className='start-button'
+              onClick={handleStartGame}
+              disabled={selectedMode === 'daily' && todayCompleted}
+            >
+              {selectedMode === 'daily' && todayCompleted
+                ? 'Completed Today'
+                : 'Start Game'}
+            </button>
+          )}
         </div>
       </div>
     );
