@@ -1,4 +1,4 @@
-# centrd.
+# [centrd.](https://centrd.io)
 
 A tranquil, browser-based puzzle game where players find the center point that minimizes distance to randomly placed dots on a grid.
 
