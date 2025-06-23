@@ -75,8 +75,12 @@ export function useGameState() {
         prev.distanceMetric,
       );
 
-      // Use the first optimal point as the correct answer
-      const correctAnswer = optimalPoints[0];
+      // If the guess is one of the optimal points, use it as correctAnswer
+      const correctAnswer =
+        optimalPoints.find(
+          (point) => point.x === position.x && point.y === position.y,
+        ) || optimalPoints[0]; // Otherwise use first optimal point
+
       const score = calculateDistance(
         position,
         correctAnswer,
