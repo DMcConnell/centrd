@@ -20,7 +20,12 @@ function hashDate(date: string): number {
 }
 
 export function getTodayISO(): string {
-  return new Date().toISOString().split('T')[0];
+  const now = new Date();
+  // Get the date in the user's local timezone
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 export function subtractDays(dateISO: string, days: number): string {
@@ -32,7 +37,7 @@ export function subtractDays(dateISO: string, days: number): string {
 function generateRandomDots(
   gridSize: number,
   dotCount: number,
-  rng: SeededRandom
+  rng: SeededRandom,
 ): Position[] {
   const dots: Position[] = [];
   const usedPositions = new Set<string>();
@@ -57,7 +62,7 @@ function generateRandomDots(
 function isValidDotPosition(
   x: number,
   y: number,
-  existingDots: Position[]
+  existingDots: Position[],
 ): boolean {
   // Ensure minimum one cell spacing between dots
   for (const dot of existingDots) {
@@ -69,7 +74,10 @@ function isValidDotPosition(
   return true;
 }
 
-function generateDailyPuzzle(difficulty: Difficulty, rng: SeededRandom): Puzzle {
+function generateDailyPuzzle(
+  difficulty: Difficulty,
+  rng: SeededRandom,
+): Puzzle {
   const config = DIFFICULTY_CONFIG[difficulty];
   const gridSize =
     Math.floor(rng.next() * (config.maxGrid - config.minGrid + 1)) +
@@ -91,25 +99,27 @@ export function getTodaysPuzzles(): Puzzle[] {
   const rng = new SeededRandom(seed);
 
   return [
-    generateDailyPuzzle('easy', rng),    // Puzzle 1
-    generateDailyPuzzle('easy', rng),    // Puzzle 2
-    generateDailyPuzzle('medium', rng),  // Puzzle 3
-    generateDailyPuzzle('medium', rng),  // Puzzle 4
-    generateDailyPuzzle('hard', rng),    // Puzzle 5
-    generateDailyPuzzle('hard', rng),    // Puzzle 6
+    generateDailyPuzzle('easy', rng), // Puzzle 1
+    generateDailyPuzzle('easy', rng), // Puzzle 2
+    generateDailyPuzzle('medium', rng), // Puzzle 3
+    generateDailyPuzzle('medium', rng), // Puzzle 4
+    generateDailyPuzzle('hard', rng), // Puzzle 5
+    generateDailyPuzzle('hard', rng), // Puzzle 6
   ];
 }
 
 export function formatDate(dateISO: string): string {
   const date = new Date(dateISO);
-  return date.toLocaleDateString('en-US', { 
-    month: 'long', 
-    day: 'numeric', 
-    year: 'numeric' 
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
   });
 }
 
-export function calculateCurrentStreak(scores: { [date: string]: { completed: boolean } }): number {
+export function calculateCurrentStreak(scores: {
+  [date: string]: { completed: boolean };
+}): number {
   const today = getTodayISO();
   let streak = 0;
   let checkDate = today;
